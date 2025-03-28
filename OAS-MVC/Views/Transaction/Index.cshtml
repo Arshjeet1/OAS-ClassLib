@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OAS_ClassLib.Models.Transaction>
+
+<h1>Transaction Details</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table style="border: 1px solid black">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black">TransactionID</th>
+                <th style="border: 1px solid black">BuyerID</th>
+                <th style="border: 1px solid black">AuctionID</th>
+                <th style="border: 1px solid black">Amount</th>
+                <th style="border: 1px solid black">PaymentStatus</th>
+                <th style="border: 1px solid black">PaymentDate</th>
+            </tr>
+        </thead>
+        <tbody style="border: 1px solid black">
+            @foreach (var transaction in Model)
+            {
+                <tr>
+                    <td style="border: 1px solid black">@transaction.TransactionID</td>
+                    <td style="border: 1px solid black">@transaction.BuyerID</td>
+                    <td style="border: 1px solid black">@transaction.AuctionID</td>
+                    <td style="border: 1px solid black">@transaction.Amount</td>
+                    <td style="border: 1px solid black">@transaction.PaymentStatus</td>
+                    <td style="border: 1px solid black">@transaction.PaymentDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No Transaction Data Found.</p>
+}

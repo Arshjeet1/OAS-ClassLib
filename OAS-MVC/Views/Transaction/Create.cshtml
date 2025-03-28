@@ -1,0 +1,43 @@
+﻿@model OAS_ClassLib.Models.Transaction
+
+
+@{
+    ViewData["Title"] = "Create Transaction";
+}
+
+<h1>Create Transaction</h1>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="BuyerID" class="control-label"></label>
+                <input asp-for="BuyerID" class="form-control"/>
+                <span asp-validation-for="BuyerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuctionID" class="control-label"></label>
+                <input asp-for="AuctionID" class="form-control" />
+                <span asp-validation-for="AuctionID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentStatus" class="control-label"></label>
+                <input asp-for="PaymentStatus" class="form-control" />
+                <span asp-validation-for="PaymentStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentDate" class="control-label"></label>
+                <input asp-for="PaymentDate" class="form-control" />
+                <span asp-validation-for="PaymentDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
