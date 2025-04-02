@@ -49,6 +49,44 @@ namespace OAS_WebAPI.Controllers
             _productServices.AddProduct(product);
             return Ok();
         }
-        
+        // Image Handling Endpoints
+        [HttpPost("{productId}/uploadImage")]
+        public async Task<IActionResult> UploadImage(int productId, IFormFile image)
+        {
+            var filePath = await _productServices.UploadImageAsync(image, productId);
+
+            if (filePath == null)
+            {
+                return BadRequest("No image file provided.");
+            }
+
+            return Ok(new { FilePath = filePath });
+        }
+
+        [HttpGet("downloadImage/{fileName}")]
+        public IActionResult DownloadImage(string fileName)
+        {
+            var image = _productServices.DownloadImage(fileName);
+
+            if (image == null)
+            {
+                return NotFound("Image not found.");
+            }
+
+            return File(image, "image/jpeg");
+        }
+
+        [HttpGet("{productId}/images")]
+        public IActionResult GetImagesByProductId(int productId)
+        {
+            var images = _productServices.GetImagesByProductId(productId);
+
+            if (images == null || !images.Any())
+            {
+                return NotFound("No images found for this product.");
+            }
+
+            return Ok(images);
+        }
     }
 }
