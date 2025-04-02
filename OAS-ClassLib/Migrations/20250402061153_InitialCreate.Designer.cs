@@ -12,7 +12,7 @@ using OAS_ClassLib;
 namespace OAS_ClassLib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250320045731_InitialCreate")]
+    [Migration("20250402061153_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -85,6 +85,32 @@ namespace OAS_ClassLib.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("OAS_ClassLib.Models.ProductImage", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
+
+                    b.Property<byte[]>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImage");
+                });
+
             modelBuilder.Entity("OAS_ClassLib.Models.Review", b =>
                 {
                     b.Property<int>("ReviewID")
@@ -141,6 +167,17 @@ namespace OAS_ClassLib.Migrations
                     b.HasKey("TransactionID");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("OAS_ClassLib.Models.ProductImage", b =>
+                {
+                    b.HasOne("OAS_ClassLib.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

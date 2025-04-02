@@ -8,12 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+
 
 namespace OAS_ClassLib.Repositories
 {
     public class ProductServices
     {
         private readonly AppDbContext _context;
+        private readonly string _imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedImages");
 
         public ProductServices(AppDbContext context)
         {
@@ -55,6 +58,49 @@ namespace OAS_ClassLib.Repositories
         public List<Product> GetAllProducts()
         {
             return _context.Products.ToList();
+        }
+        public async Task<string> UploadImageAsync(IFormFile image, int productId)
+        {
+            if (image == null || image.Length == 0)
+            {
+                return null;
+            }
+
+            var filePath = Path.Combine(_imageFolderPath, image.FileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+            }
+
+            var productImage = new ProductImage
+            {
+                ProductId = productId,
+                ImageFileName = image.FileName,
+                ImageData = await File.ReadAllBytesAsync(filePath)
+            };
+
+            _context.ProductImage.Add(productImage);
+            _context.SaveChanges();
+
+            return filePath;
+        }
+
+        public FileStream DownloadImage(string fileName)
+        {
+            var filePath = Path.Combine(_imageFolderPath, fileName);
+
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+
+            return File.OpenRead(filePath);
+        }
+
+        public IEnumerable<ProductImage> GetImagesByProductId(int productId)
+        {
+            return _context.ProductImage.Where(pi => pi.ProductId == productId).ToList();
         }
     }
 }
