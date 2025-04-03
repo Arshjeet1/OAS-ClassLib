@@ -32,7 +32,7 @@ namespace OAS_WebAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<AuctionServices>();
             builder.Services.AddScoped<UserServices>();
-            builder.Services.AddScoped<ProductServices>();
+            builder.Services.AddScoped<OAS_ClassLib.Repositories.ProductServices>();
             builder.Services.AddDbContext<AppDbContext>();
 
 
