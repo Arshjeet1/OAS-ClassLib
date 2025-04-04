@@ -1,4 +1,5 @@
-﻿using OAS_ClassLib.Models;
+﻿using Microsoft.Data.SqlClient;
+using OAS_ClassLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,19 +99,41 @@ namespace OAS_ClassLib.Repositories
                 return false;
             }
         }
-
         public List<User> GetUsers()
         {
+            List<User> users = new List<User>();
+            DB1.nameValuePairList nvpList = new DB1.nameValuePairList();
+
             try
             {
-                var parameters = new DB1.nameValuePairList();
-                return DB1.DisplayUsers(DB1.StoredProcedures.DisplayUsers, parameters);
+                SqlDataReader reader = DB1.GetDataReader(DB1.StoredProcedures.DisplayUsers, nvpList);
+
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        User user = new User
+                        {
+                            UserId = Convert.ToInt32(reader["UserId"]),
+                            Name = reader["Name"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Password = reader["Password"].ToString(),
+                            Role = reader["Role"].ToString(),
+                            ContactNumber = reader["ContactNumber"].ToString()
+                        };
+
+                        users.Add(user);
+                    }
+
+                    reader.Close();
+                }
             }
             catch (Exception exp)
             {
-                Console.WriteLine($"Error fetching users: {exp.Message}");
-                return new List<User>();
+                Console.WriteLine("Error fetching auction details: " + exp.Message);
             }
+
+            return users;
         }
 
         #endregion
