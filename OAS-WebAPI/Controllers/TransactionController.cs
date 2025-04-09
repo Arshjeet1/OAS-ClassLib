@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
 using System.Transactions;
@@ -11,11 +12,18 @@ namespace OAS_WebAPI.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
-        private readonly TransactionServices _transactionServices;
+        //private readonly TransactionServices _transactionServices;
 
-        public TransactionController()
+        //public TransactionController()
+        //{
+        //    _transactionServices = new TransactionServices();
+        //}
+        private readonly ITransactionService _transactionServices;
+
+        // Constructor Injection
+        public TransactionController(ITransactionService transactionServices)
         {
-            _transactionServices = new TransactionServices();
+            _transactionServices = transactionServices ?? throw new ArgumentNullException(nameof(transactionServices));
         }
 
         [HttpPost]

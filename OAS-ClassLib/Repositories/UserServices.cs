@@ -1,9 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
+using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Models;
 
 namespace OAS_ClassLib.Repositories
 {
-    public class UserServices
+    public class UserServices : IUserServices
     {
         private DB1 DB1 = new DB1();
 

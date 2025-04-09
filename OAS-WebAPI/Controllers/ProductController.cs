@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
 
@@ -11,18 +12,35 @@ namespace OAS_WebAPI.Controllers
     public class ProductController : ControllerBase
     {
 
-        private readonly ProductServices _productServices;
+        //private readonly ProductServices _productServices;
 
-        public ProductController(ProductServices productServices)
+        //public ProductController(ProductServices productServices)
+        //{
+        //    _productServices = productServices;
+        //}
+        private readonly IProductCrudService _crudService;
+        private readonly IProductImageService _imageService;
+        private readonly IProductStatisticsService _statisticsService;
+        private readonly IProductQueryService _queryService;
+
+        // Constructor Injection
+        public ProductController(
+            IProductCrudService crudService,
+            IProductImageService imageService,
+            IProductStatisticsService statisticsService,
+            IProductQueryService queryService)
         {
-            _productServices = productServices;
+            _crudService = crudService;
+            _imageService = imageService;
+            _statisticsService = statisticsService;
+            _queryService = queryService;
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult GetAllProduct()
         {
-            var obj = _productServices.GetAllProducts();
+            var obj = _crudService.GetAllProducts();
             return Ok(obj);
         }
 
@@ -30,7 +48,7 @@ namespace OAS_WebAPI.Controllers
 
         public IActionResult RemoveProduct(int productId)
         {
-            _productServices.RemoveProduct(productId);
+            _crudService.RemoveProduct(productId);
             return Ok();
         }
 
@@ -38,7 +56,7 @@ namespace OAS_WebAPI.Controllers
         [Authorize(Roles = "User")]
         public IActionResult UpdateExisting(int productId, [FromBody] Product product)
         {
-            _productServices.UpdateProduct(product);
+            _crudService.UpdateProduct(product);
             return Ok();
         }
 
@@ -51,7 +69,7 @@ namespace OAS_WebAPI.Controllers
             {
                 return BadRequest("Invalid request");
             }
-            _productServices.AddProduct(product);
+            _crudService.AddProduct(product);
             return Ok();
         }
         // Image Handling Endpoints
@@ -59,7 +77,7 @@ namespace OAS_WebAPI.Controllers
         [Authorize(Roles = "User")]
         public async Task<IActionResult> UploadImage(int productId, IFormFile image)
         {
-            var filePath = await _productServices.UploadImageAsync(image, productId);
+            var filePath = await _imageService.UploadImageAsync(image, productId);
 
             if (filePath == null)
             {
@@ -73,7 +91,7 @@ namespace OAS_WebAPI.Controllers
 
         public IActionResult DownloadImage(string fileName)
         {
-            var image = _productServices.DownloadImage(fileName);
+            var image = _imageService.DownloadImage(fileName);
 
             if (image == null)
             {
@@ -87,7 +105,7 @@ namespace OAS_WebAPI.Controllers
         [Authorize(Roles = "User")] 
         public IActionResult GetImagesByProductId(int productId)
         {
-            var images = _productServices.GetImagesByProductId(productId);
+            var images = _imageService.GetImagesByProductId(productId);
 
             if (images == null || !images.Any())
             {
@@ -100,63 +118,63 @@ namespace OAS_WebAPI.Controllers
         [HttpGet("count")]
         public IActionResult GetProductCount()
         {
-            var count = _productServices.GetProductCount();
+            var count = _statisticsService.GetProductCount();
             return Ok(count);
         }
 
         [HttpGet("totalStartPrice")]
         public IActionResult GetTotalStartPrice()
         {
-            var totalStartPrice = _productServices.GetTotalStartPrice();
+            var totalStartPrice = _statisticsService.GetTotalStartPrice();
             return Ok(totalStartPrice);
         }
 
         [HttpGet("averageStartPrice")]
         public IActionResult GetAverageStartPrice()
         {
-            var averageStartPrice = _productServices.GetAverageStartPrice();
+            var averageStartPrice = _statisticsService.GetAverageStartPrice();
             return Ok(averageStartPrice);
         }
 
         [HttpGet("minStartPrice")]
         public IActionResult GetMinStartPrice()
         {
-            var minStartPrice = _productServices.GetMinStartPrice();
+            var minStartPrice = _statisticsService.GetMinStartPrice();
             return Ok(minStartPrice);
         }
 
         [HttpGet("maxStartPrice")]
         public IActionResult GetMaxStartPrice()
         {
-            var maxStartPrice = _productServices.GetMaxStartPrice();
+            var maxStartPrice = _statisticsService.GetMaxStartPrice();
             return Ok(maxStartPrice);
         }
 
         [HttpGet("productsByCategory")]
         public IActionResult GetProductsByCategory()
         {
-            var productsByCategory = _productServices.GetProductsByCategory();
+            var productsByCategory = _queryService.GetProductsByCategory();
             return Ok(productsByCategory);
         }
 
         [HttpGet("distinctCategories")]
         public IActionResult GetDistinctCategories()
         {
-            var distinctCategories = _productServices.GetDistinctCategories();
+            var distinctCategories = _queryService.GetDistinctCategories();
             return Ok(distinctCategories);
         }
 
         [HttpGet("orderedByStartPrice")]
         public IActionResult GetProductsOrderedByStartPrice()
         {
-            var orderedProducts = _productServices.GetProductsOrderedByStartPrice();
+            var orderedProducts = _queryService.GetProductsOrderedByStartPrice();
             return Ok(orderedProducts);
         }
 
         [HttpGet("orderedByStartPriceDesc")]
         public IActionResult GetProductsOrderedByStartPriceDesc()
         {
-            var orderedProductsDesc = _productServices.GetProductsOrderedByStartPriceDesc();
+            var orderedProductsDesc = _queryService.GetProductsOrderedByStartPriceDesc();
             return Ok(orderedProductsDesc);
         }
 
