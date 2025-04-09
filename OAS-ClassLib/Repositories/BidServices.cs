@@ -1,8 +1,9 @@
-﻿using OAS_ClassLib.Models;
+﻿using OAS_ClassLib.Interfaces;
+using OAS_ClassLib.Models;
 
 namespace OAS_ClassLib.Repositories
 {
-    public class BidServices
+    public class BidServices : IBidService, IBidStatisticsService, IBidGroupingService, IBidQueryService
     {
         public void AddBid(Bid newBid)
         {
