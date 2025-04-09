@@ -6,11 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OAS_ClassLib.Migrations
 {
     /// <inheritdoc />
-    public partial class TntialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Auctions",
+                columns: table => new
+                {
+                    AuctionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CurrentBid = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Auctions", x => x.AuctionId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Bids",
                 columns: table => new
@@ -25,6 +42,21 @@ namespace OAS_ClassLib.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bids", x => x.BidID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductImage",
+                columns: table => new
+                {
+                    ImageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ImageFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductImage", x => x.ImageId);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,40 +112,37 @@ namespace OAS_ClassLib.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductImage",
+                name: "Users",
                 columns: table => new
                 {
-                    ImageId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    ImageFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductImage", x => x.ImageId);
-                    table.ForeignKey(
-                        name: "FK_ProductImage_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductID",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductImage_ProductId",
-                table: "ProductImage",
-                column: "ProductId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Auctions");
+
+            migrationBuilder.DropTable(
                 name: "Bids");
 
             migrationBuilder.DropTable(
                 name: "ProductImage");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
@@ -122,7 +151,7 @@ namespace OAS_ClassLib.Migrations
                 name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Users");
         }
     }
 }
