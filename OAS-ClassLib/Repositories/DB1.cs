@@ -1,11 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+
 namespace OAS_ClassLib.Repositories
 {
     public class DB1
     {
-        private const string ConnectionString = "Data Source=LTIN593499;Initial Catalog=OAS;persist security info=True;Integrated Security=SSPI;Encrypt=False";
-
+        private const string ConnectionString = "Data Source=LTIN593323;Initial Catalog=OAS;persist security info=True;Integrated Security=SSPI;Encrypt=False";
         #region Helper Methods
 
         private SqlParameter CreateSqlParameter(string name, object value)
@@ -34,11 +34,11 @@ namespace OAS_ClassLib.Repositories
 
         #endregion
 
-
         #region Execute Methods
 
 
         private int ExecuteNonQuery(StoredProcedures sp, nameValuePairList parameters)
+        
         {
             try
             {

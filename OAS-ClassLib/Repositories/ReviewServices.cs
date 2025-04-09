@@ -35,7 +35,89 @@ namespace OAS_ClassLib.Repositories
                 }
             }
         }
+        public int GetReviewCount(int targetUserId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Reviews
+                              .Count(r => r.TargetUserID == targetUserId);
+            }
+        }
 
+        public double GetAverageRating(int targetUserId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Reviews
+                              .Where(r => r.TargetUserID == targetUserId)
+                              .Average(r => r.Rating);
+            }
+        }
+
+        public int GetMinRating(int targetUserId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Reviews
+                              .Where(r => r.TargetUserID == targetUserId)
+                              .Min(r => r.Rating);
+            }
+        }
+
+        public int GetMaxRating(int targetUserId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Reviews
+                              .Where(r => r.TargetUserID == targetUserId)
+                              .Max(r => r.Rating);
+            }
+        }
+
+        public List<object> GetReviewsByUser(int targetUserId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Reviews
+                              .Where(r => r.TargetUserID == targetUserId)
+                              .GroupBy(r => r.UserID)
+                              .Select(g => new { UserID = g.Key, Count = g.Count() })
+                              .ToList<object>();
+            }
+        }
+
+        public List<int> GetDistinctUsers(int targetUserId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Reviews
+                              .Where(r => r.TargetUserID == targetUserId)
+                              .Select(r => r.UserID)
+                              .Distinct()
+                              .ToList();
+            }
+        }
+
+        public List<Review> GetReviewsOrderedByRating(int targetUserId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Reviews
+                              .Where(r => r.TargetUserID == targetUserId)
+                              .OrderBy(r => r.Rating)
+                              .ToList();
+            }
+        }
+        public List<Review> GetReviewsOrderedByRatingDesc(int targetUserId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return context.Reviews
+                              .Where(r => r.TargetUserID == targetUserId)
+                              .OrderByDescending(r => r.Rating)
+                              .ToList();
+            }
+        }
         public void DeleteReview(int reviewId)
         {
             using (var context = new AppDbContext())

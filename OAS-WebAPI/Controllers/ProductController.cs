@@ -96,5 +96,69 @@ namespace OAS_WebAPI.Controllers
 
             return Ok(images);
         }
+        // Aggregate functions endpoints
+        [HttpGet("count")]
+        public IActionResult GetProductCount()
+        {
+            var count = _productServices.GetProductCount();
+            return Ok(count);
+        }
+
+        [HttpGet("totalStartPrice")]
+        public IActionResult GetTotalStartPrice()
+        {
+            var totalStartPrice = _productServices.GetTotalStartPrice();
+            return Ok(totalStartPrice);
+        }
+
+        [HttpGet("averageStartPrice")]
+        public IActionResult GetAverageStartPrice()
+        {
+            var averageStartPrice = _productServices.GetAverageStartPrice();
+            return Ok(averageStartPrice);
+        }
+
+        [HttpGet("minStartPrice")]
+        public IActionResult GetMinStartPrice()
+        {
+            var minStartPrice = _productServices.GetMinStartPrice();
+            return Ok(minStartPrice);
+        }
+
+        [HttpGet("maxStartPrice")]
+        public IActionResult GetMaxStartPrice()
+        {
+            var maxStartPrice = _productServices.GetMaxStartPrice();
+            return Ok(maxStartPrice);
+        }
+
+        [HttpGet("productsByCategory")]
+        public IActionResult GetProductsByCategory()
+        {
+            var productsByCategory = _productServices.GetProductsByCategory();
+            return Ok(productsByCategory);
+        }
+
+        [HttpGet("distinctCategories")]
+        public IActionResult GetDistinctCategories()
+        {
+            var distinctCategories = _productServices.GetDistinctCategories();
+            return Ok(distinctCategories);
+        }
+
+        [HttpGet("orderedByStartPrice")]
+        public IActionResult GetProductsOrderedByStartPrice()
+        {
+            var orderedProducts = _productServices.GetProductsOrderedByStartPrice();
+            return Ok(orderedProducts);
+        }
+
+        [HttpGet("orderedByStartPriceDesc")]
+        public IActionResult GetProductsOrderedByStartPriceDesc()
+        {
+            var orderedProductsDesc = _productServices.GetProductsOrderedByStartPriceDesc();
+            return Ok(orderedProductsDesc);
+        }
+
     }
 }
