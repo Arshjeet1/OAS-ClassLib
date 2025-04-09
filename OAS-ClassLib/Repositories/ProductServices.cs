@@ -102,5 +102,57 @@ namespace OAS_ClassLib.Repositories
         {
             return _context.ProductImage.Where(pi => pi.ProductId == productId).ToList();
         }
+        public int GetProductCount()
+        {
+            return _context.Products.Count();
+        }
+
+        public decimal GetTotalStartPrice()
+        {
+            return _context.Products.Sum(p => p.StartPrice);
+        }
+
+        public decimal GetAverageStartPrice()
+        {
+            return _context.Products.Average(p => p.StartPrice);
+        }
+
+        public decimal GetMinStartPrice()
+        {
+            return _context.Products.Min(p => p.StartPrice);
+        }
+
+        public decimal GetMaxStartPrice()
+        {
+            return _context.Products.Max(p => p.StartPrice);
+        }
+
+        public List<object> GetProductsByCategory()
+        {
+            return _context.Products
+                .GroupBy(p => p.Category)
+                .Select(g => new { Category = g.Key, Count = g.Count() })
+                .ToList<object>();
+        }
+
+        public List<string> GetDistinctCategories()
+        {
+            return _context.Products
+                .Select(p => p.Category)
+                .Distinct()
+                .ToList();
+        }
+
+        public List<Product> GetProductsOrderedByStartPrice()
+        {
+            return _context.Products.OrderBy(p => p.StartPrice).ToList();
+        }
+
+        public List<Product> GetProductsOrderedByStartPriceDesc()
+        {
+            return _context.Products.OrderByDescending(p => p.StartPrice).ToList();
+        }
     }
+
+
 }
