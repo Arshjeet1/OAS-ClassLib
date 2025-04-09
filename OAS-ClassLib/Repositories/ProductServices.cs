@@ -1,10 +1,11 @@
 ﻿using OAS_ClassLib.Models;
 using Microsoft.AspNetCore.Http;
+using OAS_ClassLib.Interfaces;
 
 
 namespace OAS_ClassLib.Repositories
 {
-    public class ProductServices
+    public class ProductServices : IProductCrudService, IProductImageService, IProductStatisticsService, IProductQueryService
     {
         private readonly AppDbContext _context;
         private readonly string _imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedImages");
