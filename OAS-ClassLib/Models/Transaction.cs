@@ -26,9 +26,5 @@ namespace OAS_ClassLib.Models
 
         [DataType(DataType.Date)]
         public DateTime PaymentDate { get; set; }
-
-        // Navigation properties
-        public User? Buyer { get; set; }
-        public Auction? Auction { get; set; }
     }
 }

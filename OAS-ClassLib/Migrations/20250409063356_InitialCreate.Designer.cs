@@ -12,8 +12,8 @@ using OAS_ClassLib;
 namespace OAS_ClassLib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250408103308_RealtionBwTables")]
-    partial class RealtionBwTables
+    [Migration("20250409063356_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,8 +51,6 @@ namespace OAS_ClassLib.Migrations
 
                     b.HasKey("AuctionId");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("Auctions");
                 });
 
@@ -77,10 +75,6 @@ namespace OAS_ClassLib.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("BidID");
-
-                    b.HasIndex("AuctionID");
-
-                    b.HasIndex("BuyerID");
 
                     b.ToTable("Bids");
                 });
@@ -141,8 +135,6 @@ namespace OAS_ClassLib.Migrations
 
                     b.HasKey("ImageId");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("ProductImage");
                 });
 
@@ -172,8 +164,6 @@ namespace OAS_ClassLib.Migrations
 
                     b.HasKey("ReviewID");
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("Reviews");
                 });
 
@@ -202,10 +192,6 @@ namespace OAS_ClassLib.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TransactionID");
-
-                    b.HasIndex("AuctionID");
-
-                    b.HasIndex("BuyerID");
 
                     b.ToTable("Transactions");
                 });
@@ -241,100 +227,6 @@ namespace OAS_ClassLib.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.Auction", b =>
-                {
-                    b.HasOne("OAS_ClassLib.Models.Product", "Product")
-                        .WithMany("Auctions")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.Bid", b =>
-                {
-                    b.HasOne("OAS_ClassLib.Models.Auction", "Auction")
-                        .WithMany("Bids")
-                        .HasForeignKey("AuctionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OAS_ClassLib.Models.User", "Buyer")
-                        .WithMany("Bids")
-                        .HasForeignKey("BuyerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Auction");
-
-                    b.Navigation("Buyer");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.ProductImage", b =>
-                {
-                    b.HasOne("OAS_ClassLib.Models.Product", "Product")
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.Review", b =>
-                {
-                    b.HasOne("OAS_ClassLib.Models.User", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.Transaction", b =>
-                {
-                    b.HasOne("OAS_ClassLib.Models.Auction", "Auction")
-                        .WithMany("Transactions")
-                        .HasForeignKey("AuctionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OAS_ClassLib.Models.User", "Buyer")
-                        .WithMany("Transactions")
-                        .HasForeignKey("BuyerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Auction");
-
-                    b.Navigation("Buyer");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.Auction", b =>
-                {
-                    b.Navigation("Bids");
-
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.Product", b =>
-                {
-                    b.Navigation("Auctions");
-
-                    b.Navigation("ProductImages");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.User", b =>
-                {
-                    b.Navigation("Bids");
-
-                    b.Navigation("Reviews");
-
-                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,25 +14,25 @@ namespace OAS_ClassLib.Repositories
 
         #region Operations
 
-        public bool UserIDExists(int userId)
-        {
-            try
-            {
-                var parameters = new DB1.nameValuePairList
-                {
-                    new DB1.nameValuePair("@UserID", userId)
-                };
+        //public bool UserIDExists(int userId)
+        //{
+        //    try
+        //    {
+        //        var parameters = new DB1.nameValuePairList
+        //        {
+        //            new DB1.nameValuePair("@UserID", userId)
+        //        };
 
-                object result = DB1.ExecuteScalar(DB1.StoredProcedures.CheckUserID, parameters);
+        //        object result = DB1.ExecuteScalar(DB1.StoredProcedures.CheckUserID, parameters);
 
-                return result != null;
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine($"Error checking UserID: {exp.Message}");
-                return false;
-            }
-        }
+        //        return result != null;
+        //    }
+        //    catch (Exception exp)
+        //    {
+        //        Console.WriteLine($"Error checking UserID: {exp.Message}");
+        //        return false;
+        //    }
+        //}
 
         public bool AddUser(User user)
         {

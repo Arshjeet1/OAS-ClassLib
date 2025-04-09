@@ -31,11 +31,5 @@ namespace OAS_ClassLib.Models
         [Required(ErrorMessage = "Contact Number is required")]
         [Phone(ErrorMessage = "Invalid Phone Number")]
         public string ContactNumber { get; set; }
-
-        // Navigation properties
-        public ICollection<Review>? Reviews { get; set; }
-        public ICollection<Transaction>? Transactions { get; set; }
-        public ICollection<Bid>? Bids { get; set; }
-
     }
 }

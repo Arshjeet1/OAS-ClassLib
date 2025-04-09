@@ -21,7 +21,5 @@ namespace OAS_ClassLib.Models
 
         public byte[] ImageData { get; set; }
 
-        // Navigation property
-        public Product? Product { get; set; }
     }
 }

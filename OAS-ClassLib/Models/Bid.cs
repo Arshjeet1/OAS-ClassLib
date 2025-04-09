@@ -19,9 +19,5 @@ namespace OAS_ClassLib.Models
         [Required(ErrorMessage = "Please enter the value for amount.")]
         public decimal Amount { get; set; }
         public DateTime BidTime { get; set; }
-
-        // Navigation properties
-        public Auction? Auction { get; set; }
-        public User? Buyer { get; set; }
     }
 }

@@ -26,10 +26,5 @@ namespace OAS_ClassLib.Models
 
         public string? CurrentBid { get; set; }
         public string Status { get; set; }
-
-        // Navigation properties
-        public Product? Product { get; set; }
-        public ICollection<Bid>? Bids { get; set; }
-        public ICollection<Transaction>? Transactions { get; set; }
     }
 }
