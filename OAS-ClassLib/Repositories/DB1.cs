@@ -11,8 +11,7 @@ namespace OAS_ClassLib.Repositories
 {
     public class DB1
     {
-        private const string ConnectionString = "Data Source=LTIN593301;Initial Catalog=OAS;persist security info=True;Integrated Security=SSPI;Encrypt=False";
-
+        private const string ConnectionString = "Data Source=LTIN593499;Initial Catalog=OAS;persist security info=True;Integrated Security=SSPI;Encrypt=False";
         #region Helper Methods
 
         private SqlParameter CreateSqlParameter(string name, object value)
@@ -41,14 +40,6 @@ namespace OAS_ClassLib.Repositories
 
         #endregion
 
-        #region Display Methods
-
-        public List<User> DisplayUsers(StoredProcedures sp, nameValuePairList parameters)
-        {
-            return ExecuteReader(sp, parameters);
-        }
-
-        #endregion
 
         #region Execute Methods
 
@@ -105,52 +96,14 @@ namespace OAS_ClassLib.Repositories
             }
         }
 
-        private List<User> ExecuteReader(StoredProcedures sp, nameValuePairList parameters)
-        {
-            List<User> users = new List<User>();
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(sp.ToString(), connection))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        foreach (var param in parameters)
-                        {
-                            cmd.Parameters.Add(CreateSqlParameter(param.ColName, param.Value));
-                        }
+       
 
-                        connection.Open();
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            User user = new User
-                            {
-                                UserId = Convert.ToInt32(reader["UserId"]),
-                                Name = reader["Name"].ToString(),
-                                Email = reader["Email"].ToString(),
-                                Password = reader["Password"].ToString(),
-                                Role = reader["Role"].ToString(),
-                                ContactNumber = reader["ContactNumber"].ToString()
-                            };
-                            users.Add(user);
-                        }
-                    }
-                }
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine("Error: " + exp.Message);
-            }
-            return users;
-        }
-
-        public SqlDataReader GetDataReader(StoredProcedures sp, nameValuePairList parameters)
+        public SqlDataReader GetDataReader(StoredProcedures DisplayUsers, nameValuePairList parameters)
         {
             try
             {
                 SqlConnection connection = new SqlConnection(ConnectionString);
-                SqlCommand cmdObject = new SqlCommand(sp.ToString(), connection);
+                SqlCommand cmdObject = new SqlCommand(DisplayUsers.ToString(), connection);
 
                 cmdObject.CommandType = CommandType.StoredProcedure;
 
