@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
@@ -16,12 +17,14 @@ namespace OAS_WebAPI.Controllers
             _AuctionServices = auctionServices;
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllAuctionDetails()
         {
             var auction = _AuctionServices.GetAllAuctions();
             return Ok(auction);
         }
         [HttpPost]
+        [Authorize(Roles = "User")]    
         public IActionResult AddNewAuction([FromBody] Auction auction)
         {
             if (auction == null)
@@ -32,6 +35,8 @@ namespace OAS_WebAPI.Controllers
             return Ok(obj);
         }
         [HttpPatch]
+        [Authorize(Roles = "User")]
+        
         public IActionResult UpdateNewAuction([FromBody] Auction auction)
         {
             if (auction == null)
@@ -43,6 +48,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpDelete("{auctionId}")]
+        
         public IActionResult DeleteNewAuction(int auctionId)
         {
             if (auctionId <= 0)

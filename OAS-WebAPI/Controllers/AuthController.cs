@@ -1,13 +1,7 @@
 ﻿using JWT.Logic;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using OAS_ClassLib.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
+using OAS_ClassLib.Repositories;
 
 namespace JWT.Controllers
 {
@@ -16,10 +10,12 @@ namespace JWT.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly UserServices _userService;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, UserServices userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
 
         [HttpPost("login")]
@@ -27,22 +23,16 @@ namespace JWT.Controllers
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                return BadRequest("Invalid credentials");
+                return BadRequest("Enter the credentials");
             }
 
-            // For demonstration purposes, we'll create a User object with hardcoded values.
-            // In a real application, you would validate the username and password against a database
-            // and retrieve the user details accordingly.
-            var user = new User
-            {
-                UserId = 1, // This should be retrieved from the database
-                Name = username,
-                Password = password, // This should be hashed and validated
-                Email = "user@example.com", // This should be retrieved from the database
-                Role = "Admin", // This should be retrieved from the database
-                ContactNumber = "1234567890" // This should be retrieved from the database
-            };
+            int valid = _userService.Validate(username,password);
 
+            if (valid==-1)
+            {
+                return Unauthorized("Invalid username or password");
+            }
+            User user = _userService.GetUserByUsernameAndId(username,password);
             // Generate JWT Token
             TokenGeneration jwtTokenString = new TokenGeneration(_configuration);
             string tokenString = jwtTokenString.GenerateJWT(user);

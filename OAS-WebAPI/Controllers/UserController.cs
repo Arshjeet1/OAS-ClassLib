@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
@@ -28,13 +29,16 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User")]
         public IActionResult GetAllUsers()
         {
             var users = _userServices.GetUsers();
             return Ok(users);
         }
         [HttpPatch]
-        public IActionResult UpdateNewAuction([FromBody] User user)
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
+        public IActionResult UpdateNewUser([FromBody] User user)
         {
             if (user == null)
             {
@@ -45,7 +49,9 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpDelete("{UserId}")]
-        public IActionResult DeleteNewAuction(int UserId)
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
+        public IActionResult DeleteNewUser(int UserId)
         {
             if (UserId <= 0)
             {
@@ -55,11 +61,11 @@ namespace OAS_WebAPI.Controllers
             bool result = _userServices.DeleteUser(UserId);
             if (result)
             {
-                return Ok($"Auction with AuctionId {UserId} deleted successfully.");
+                return Ok($"user with userId {UserId} deleted successfully.");
             }
             else
             {
-                return NotFound($"Auction with AuctionId {UserId} does not exist.");
+                return NotFound($"user with userId {UserId} does not exist.");
             }
 
 

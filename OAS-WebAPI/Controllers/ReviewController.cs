@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using OAS_ClassLib.Models;
@@ -18,12 +19,14 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<Review>> GetAllReviews()
         {
             return _reviewServices.GetallReview();
         }
 
         [HttpPost]
+
         public ActionResult AddReview([FromBody] Review newReview)
         {
             _reviewServices.AddReview(newReview);
@@ -38,6 +41,8 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
         public ActionResult DeleteReview(int id)
         {
             _reviewServices.DeleteReview(id);

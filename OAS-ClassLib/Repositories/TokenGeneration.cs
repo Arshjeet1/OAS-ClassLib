@@ -3,9 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using OAS_ClassLib;
 using OAS_ClassLib.Models;
 
 namespace JWT.Logic
@@ -38,10 +35,10 @@ namespace JWT.Logic
 
             //Define the Token Object
             var token = new JwtSecurityToken(
-                issuer: "souravmaitra.com",
+                issuer: "Oas.com",
                 audience: "Interns",
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddHours(2),
                 signingCredentials: securityCredentials
             );
 
@@ -50,3 +47,4 @@ namespace JWT.Logic
         }
     }
 }
+
