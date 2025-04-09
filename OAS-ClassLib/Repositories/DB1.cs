@@ -1,11 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using OAS_ClassLib.Models;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OAS_ClassLib.Repositories
 {
@@ -40,7 +34,6 @@ namespace OAS_ClassLib.Repositories
         }
 
         #endregion
-
 
         #region Execute Methods
 

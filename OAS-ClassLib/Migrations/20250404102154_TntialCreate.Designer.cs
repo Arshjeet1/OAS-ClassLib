@@ -12,8 +12,8 @@ using OAS_ClassLib;
 namespace OAS_ClassLib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250402061153_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250404102154_TntialCreate")]
+    partial class TntialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

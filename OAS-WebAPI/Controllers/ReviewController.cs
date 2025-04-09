@@ -43,5 +43,61 @@ namespace OAS_WebAPI.Controllers
             _reviewServices.DeleteReview(id);
             return Ok();
         }
+
+        [HttpGet("count/{targetUserId}")]
+        public ActionResult<int> GetReviewCount(int targetUserId)
+        {
+            var count = _reviewServices.GetReviewCount(targetUserId);
+            return Ok(count);
+        }
+
+        [HttpGet("average/{targetUserId}")]
+        public ActionResult<double> GetAverageRating(int targetUserId)
+        {
+            var averageRating = _reviewServices.GetAverageRating(targetUserId);
+            return Ok(averageRating);
+        }
+
+        [HttpGet("min/{targetUserId}")]
+        public ActionResult<int> GetMinRating(int targetUserId)
+        {
+            var minRating = _reviewServices.GetMinRating(targetUserId);
+            return Ok(minRating);
+        }
+
+        [HttpGet("max/{targetUserId}")]
+        public ActionResult<int> GetMaxRating(int targetUserId)
+        {
+            var maxRating = _reviewServices.GetMaxRating(targetUserId);
+            return Ok(maxRating);
+        }
+
+        [HttpGet("users/{targetUserId}")]
+        public ActionResult<List<object>> GetReviewsByUser(int targetUserId)
+        {
+            var reviewsByUser = _reviewServices.GetReviewsByUser(targetUserId);
+            return Ok(reviewsByUser);
+        }
+
+        [HttpGet("distinct-users/{targetUserId}")]
+        public ActionResult<List<int>> GetDistinctUsers(int targetUserId)
+        {
+            var distinctUsers = _reviewServices.GetDistinctUsers(targetUserId);
+            return Ok(distinctUsers);
+        }
+
+        [HttpGet("ordered/{targetUserId}")]
+        public ActionResult<List<Review>> GetReviewsOrderedByRating(int targetUserId)
+        {
+            var orderedReviews = _reviewServices.GetReviewsOrderedByRating(targetUserId);
+            return Ok(orderedReviews);
+        }
+
+        [HttpGet("ordered-desc/{targetUserId}")]
+        public ActionResult<List<Review>> GetReviewsOrderedByRatingDesc(int targetUserId)
+        {
+            var orderedReviewsDesc = _reviewServices.GetReviewsOrderedByRatingDesc(targetUserId);
+            return Ok(orderedReviewsDesc);
+        }
     }
 }
