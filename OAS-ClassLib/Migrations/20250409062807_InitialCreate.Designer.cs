@@ -12,7 +12,7 @@ using OAS_ClassLib;
 namespace OAS_ClassLib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250402061153_InitialCreate")]
+    [Migration("20250409062807_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

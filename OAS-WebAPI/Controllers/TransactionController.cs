@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
@@ -18,6 +19,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpPost]
+
         public IActionResult AddTransaction([FromBody] OAS_ClassLib.Models.Transaction transaction)
         {
             _transactionServices.AddTransaction(transaction);
@@ -25,6 +27,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User")]
         public IActionResult GetAllTransactions()
         {
             var transactions = _transactionServices.GetAllTransactions();

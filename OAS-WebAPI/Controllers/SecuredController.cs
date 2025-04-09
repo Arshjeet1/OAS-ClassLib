@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OAS_ClassLib.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -11,11 +11,18 @@ namespace JWT.Controllers
     [Authorize]
     public class SecuredController : ControllerBase
     {
-        [HttpGet("securedendpoint")]
-        public IActionResult GetSecureData()
+        private readonly UserServices _userService;
+
+        public SecuredController(UserServices userService)
         {
-            return Ok("This is a secure endpoint. Only authorized users can access this.");
+            _userService = userService;
         }
+
+        //[HttpGet("securedendpoint")]
+        //public IActionResult GetSecureData()
+        //{
+        //    return Ok("This is a secure endpoint. Only authorized users can access this.");
+        //}
 
         [Authorize]
         [HttpGet("profile")]
@@ -23,7 +30,7 @@ namespace JWT.Controllers
         {
             // Extract claims from the payload
             var role = User.FindFirst(ClaimTypes.Role)?.Value;
-            var departmentName = User.FindFirst("Department")?.Value;
+            var name = User.FindFirst(ClaimTypes.Name)?.Value;
             var accessLevel = User.FindFirst("accessLevel")?.Value;
             var tokenExpiryClaim = User.FindFirst(JwtRegisteredClaimNames.Exp)?.Value;
 
@@ -34,15 +41,6 @@ namespace JWT.Controllers
                 tokenExpiry = DateTimeOffset.FromUnixTimeSeconds(expirySeconds).DateTime;
             }
 
-            // Validate extracted values
-            if (departmentName == "Finance")
-            {
-                // Perform actions specific to the Finance department
-            }
-            else
-            {
-                // Perform other actions
-            }
 
             // Fetch Token ID
             var tokenID = User.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
@@ -55,11 +53,14 @@ namespace JWT.Controllers
             return Ok(new
             {
                 Role = role,
-                Department = departmentName,
+                Name = name,
                 AccessLevel = accessLevel,
                 TokenExpiry = tokenExpiry,
                 TokenID = tokenID
             });
+
         }
+       
+
     }
 }

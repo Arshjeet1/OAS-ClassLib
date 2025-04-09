@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OAS_ClassLib.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OAS_ClassLib
 {
@@ -12,7 +7,7 @@ namespace OAS_ClassLib
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=LTIN593301;Initial Catalog=OAS;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Data Source=LTIN593499;Initial Catalog=OAS;Integrated Security=True;TrustServerCertificate=True");
         }
 
         public DbSet<Product> Products { get; set; }

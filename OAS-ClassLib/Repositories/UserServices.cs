@@ -1,10 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using OAS_ClassLib.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OAS_ClassLib.Repositories
 {
@@ -13,27 +8,6 @@ namespace OAS_ClassLib.Repositories
         private DB1 DB1 = new DB1();
 
         #region Operations
-
-        public bool UserIDExists(int userId)
-        {
-            try
-            {
-                var parameters = new DB1.nameValuePairList
-                {
-                    new DB1.nameValuePair("@UserID", userId)
-                };
-
-                object result = DB1.ExecuteScalar(DB1.StoredProcedures.CheckUserID, parameters);
-
-                return result != null;
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine($"Error checking UserID: {exp.Message}");
-                return false;
-            }
-        }
-
         public bool AddUser(User user)
         {
             try
@@ -99,6 +73,20 @@ namespace OAS_ClassLib.Repositories
                 return false;
             }
         }
+        public User GetUserByUsernameAndId(string username,  string password)
+        {
+            List<User> users = GetUsers();
+            return users.SingleOrDefault(u => u.Name == username && u.Password == password);
+        }
+        public int Validate(string username, string password)
+        {
+            List<User> users = GetUsers();
+            var user = users.SingleOrDefault(u => u.Name == username && u.Password == password);
+
+            return user != null ? 1 : -1; 
+        }
+       
+
         public List<User> GetUsers()
         {
             List<User> users = new List<User>();

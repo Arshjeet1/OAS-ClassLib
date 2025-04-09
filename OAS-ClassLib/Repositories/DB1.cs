@@ -1,12 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using OAS_ClassLib.Models;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace OAS_ClassLib.Repositories
 {
     public class DB1
@@ -44,31 +37,6 @@ namespace OAS_ClassLib.Repositories
 
         #region Execute Methods
 
-        public object ExecuteScalar(StoredProcedures sp, nameValuePairList parameters)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(sp.ToString(), connection))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        foreach (var param in parameters)
-                        {
-                            cmd.Parameters.Add(CreateSqlParameter(param.ColName, param.Value));
-                        }
-
-                        connection.Open();
-                        return cmd.ExecuteScalar();
-                    }
-                }
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine("Error: " + exp.Message);
-                return null;
-            }
-        }
 
         private int ExecuteNonQuery(StoredProcedures sp, nameValuePairList parameters)
         {

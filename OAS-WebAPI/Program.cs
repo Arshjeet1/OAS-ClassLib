@@ -10,8 +10,6 @@ namespace OAS_WebAPI
 {
     public class Program
     {
-
-
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -35,24 +33,6 @@ namespace OAS_WebAPI
             builder.Services.AddScoped<OAS_ClassLib.Repositories.ProductServices>();
             builder.Services.AddDbContext<AppDbContext>();
 
-
-            //var app = builder.Build();
-
-            //// Configure the HTTP request pipeline.
-            //if (app.Environment.IsDevelopment())
-            //{
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI();
-            //}
-
-            //app.UseHttpsRedirection();
-
-            //app.UseAuthorization();
-
-
-            //app.MapControllers();
-
-            //app.Run();
             var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
             builder.Services.AddAuthentication(x =>
             {
@@ -98,6 +78,10 @@ namespace OAS_WebAPI
                         new List<string>()
                     }
                 });
+            });
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
 
 

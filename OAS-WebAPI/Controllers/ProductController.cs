@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
@@ -6,7 +7,7 @@ using OAS_ClassLib.Repositories;
 namespace OAS_WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController] 
     public class ProductController : ControllerBase
     {
 
@@ -18,6 +19,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllProduct()
         {
             var obj = _productServices.GetAllProducts();
@@ -25,6 +27,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpDelete("{productId}")]
+
         public IActionResult RemoveProduct(int productId)
         {
             _productServices.RemoveProduct(productId);
@@ -32,6 +35,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpPatch("{productId}")]
+        [Authorize(Roles = "User")]
         public IActionResult UpdateExisting(int productId, [FromBody] Product product)
         {
             _productServices.UpdateProduct(product);
@@ -40,6 +44,7 @@ namespace OAS_WebAPI.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "User")]
         public IActionResult AddNewProduct([FromBody] Product product)
         {
             if (product == null)
@@ -51,6 +56,7 @@ namespace OAS_WebAPI.Controllers
         }
         // Image Handling Endpoints
         [HttpPost("{productId}/uploadImage")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> UploadImage(int productId, IFormFile image)
         {
             var filePath = await _productServices.UploadImageAsync(image, productId);
@@ -64,6 +70,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("downloadImage/{fileName}")]
+
         public IActionResult DownloadImage(string fileName)
         {
             var image = _productServices.DownloadImage(fileName);
@@ -77,6 +84,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("{productId}/images")]
+        [Authorize(Roles = "User")] 
         public IActionResult GetImagesByProductId(int productId)
         {
             var images = _productServices.GetImagesByProductId(productId);
