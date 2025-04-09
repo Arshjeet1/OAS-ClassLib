@@ -23,5 +23,9 @@ namespace OAS_ClassLib.Models
         public int Rating { get; set; }
         public required string Comment { get; set; }
         public DateTime Date { get; set; }
+
+        // Navigation properties
+        public User? User { get; set; }
+        public User? TargetUser { get; set; }
     }
 }

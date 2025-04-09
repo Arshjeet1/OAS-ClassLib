@@ -28,5 +28,9 @@ namespace OAS_ClassLib.Models
 
         [Required]
         public string Status { get; set; }
+
+        // Navigation property
+        public ICollection<ProductImage>? ProductImages { get; set; }
+        public ICollection<Auction>? Auctions { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace OAS_ClassLib.Repositories
 {
     public class DB1
     {
-        private const string ConnectionString = "Data Source=LTIN594028;Initial Catalog=OAS;persist security info=True;Integrated Security=SSPI;Encrypt=False";
+        private const string ConnectionString = "Data Source=LTIN593301;Initial Catalog=OAS;persist security info=True;Integrated Security=SSPI;Encrypt=False";
 
         #region Helper Methods
 
@@ -79,6 +79,7 @@ namespace OAS_ClassLib.Repositories
         }
 
         private int ExecuteNonQuery(StoredProcedures sp, nameValuePairList parameters)
+        
         {
             try
             {
