@@ -53,7 +53,6 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpPatch("{productId}")]
-        [Authorize(Roles = "User")]
         public IActionResult UpdateExisting(int productId, [FromBody] Product product)
         {
             _crudService.UpdateProduct(product);
@@ -62,7 +61,6 @@ namespace OAS_WebAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "User")]
         public IActionResult AddNewProduct([FromBody] Product product)
         {
             if (product == null)
@@ -74,7 +72,6 @@ namespace OAS_WebAPI.Controllers
         }
         // Image Handling Endpoints
         [HttpPost("{productId}/uploadImage")]
-        [Authorize(Roles = "User")]
         public async Task<IActionResult> UploadImage(int productId, IFormFile image)
         {
             var filePath = await _imageService.UploadImageAsync(image, productId);
@@ -88,7 +85,6 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("downloadImage/{fileName}")]
-
         public IActionResult DownloadImage(string fileName)
         {
             var image = _imageService.DownloadImage(fileName);
@@ -102,7 +98,6 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("{productId}/images")]
-        [Authorize(Roles = "User")] 
         public IActionResult GetImagesByProductId(int productId)
         {
             var images = _imageService.GetImagesByProductId(productId);

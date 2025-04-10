@@ -5,7 +5,7 @@ namespace OAS_ClassLib.Repositories
 {
     public class DB1
     {
-        private const string ConnectionString = "Data Source=LTIN593254;Initial Catalog=OAS;persist security info=True;Integrated Security=SSPI;Encrypt=False";
+        private const string ConnectionString = "Data Source=LTIN593323;Initial Catalog=OAS;persist security info=True;Integrated Security=SSPI;Encrypt=False";
         #region Helper Methods
 
         private SqlParameter CreateSqlParameter(string name, object value)
