@@ -1,8 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
+using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Models;
 namespace OAS_ClassLib.Repositories
 {
-    public class AuctionServices
+    public class AuctionServices : IAuctionService
     {
         DB1 dbObject = new DB1();
 

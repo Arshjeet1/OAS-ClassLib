@@ -1,5 +1,6 @@
 ﻿using JWT.Logic;
 using Microsoft.AspNetCore.Mvc;
+using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
 
@@ -10,9 +11,9 @@ namespace JWT.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly UserServices _userService;
+        private readonly IUserServices _userService;
 
-        public AuthController(IConfiguration configuration, UserServices userService)
+        public AuthController(IConfiguration configuration, IUserServices userService)
         {
             _configuration = configuration;
             _userService = userService;

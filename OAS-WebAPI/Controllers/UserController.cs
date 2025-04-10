@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
 
@@ -10,9 +11,15 @@ namespace OAS_WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserServices _userServices;
+        //private readonly UserServices _userServices;
 
-        public UserController(UserServices userServices)
+        //public UserController(UserServices userServices)
+        //{
+        //    _userServices = userServices;
+        //}
+        private readonly IUserServices _userServices;
+
+        public UserController(IUserServices userServices)
         {
             _userServices = userServices;
         }

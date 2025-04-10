@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
 
@@ -10,9 +11,15 @@ namespace OAS_WebAPI.Controllers
     [ApiController]
     public class AuctionController : ControllerBase
     {
-        private readonly AuctionServices _AuctionServices;
+        //private readonly AuctionServices _AuctionServices;
 
-        public AuctionController(AuctionServices auctionServices)
+        //public AuctionController(AuctionServices auctionServices)
+        //{
+        //    _AuctionServices = auctionServices;
+        //}
+        private readonly IAuctionService _AuctionServices;
+
+        public AuctionController(IAuctionService auctionServices)
         {
             _AuctionServices = auctionServices;
         }
