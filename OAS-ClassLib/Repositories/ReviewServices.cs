@@ -1,7 +1,9 @@
-﻿using OAS_ClassLib.Models;
+using OAS_ClassLib.Interfaces;
+using OAS_ClassLib.Models;
+
 namespace OAS_ClassLib.Repositories
 {
-    public class ReviewServices
+    public class ReviewServices : IReviewInsertService, IReviewRetrieveService, IReviewDeleteService, IReviewStatisticsService, IReviewQueryService, IReviewAnalysisService
     {
         public List<Review> GetallReview()
         {

@@ -7,7 +7,7 @@ namespace OAS_ClassLib
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=LTIN593499;Initial Catalog=OAS;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Data Source=LTIN593254;Initial Catalog=OAS;Integrated Security=True;TrustServerCertificate=True");
         }
 
         public DbSet<Product> Products { get; set; }
@@ -15,6 +15,5 @@ namespace OAS_ClassLib
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<ProductImage> ProductImage { get; set; }
-       
     }
 }

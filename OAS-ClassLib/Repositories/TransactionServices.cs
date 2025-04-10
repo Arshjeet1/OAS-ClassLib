@@ -1,7 +1,8 @@
-﻿using OAS_ClassLib.Models;
+﻿using OAS_ClassLib.Interfaces;
+using OAS_ClassLib.Models;
 namespace OAS_ClassLib.Repositories
 {
-    public class TransactionServices
+    public class TransactionServices : ITransactionService
     {
         public void AddTransaction(Transaction transaction)
         {
