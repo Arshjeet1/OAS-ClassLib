@@ -63,7 +63,6 @@ namespace OAS_WebAPI.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]
         public ActionResult DeleteReview(int id)
         {
             _reviewDeleteService.DeleteReview(id);
