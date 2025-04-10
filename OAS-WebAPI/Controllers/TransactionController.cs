@@ -35,7 +35,6 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "User")]
         public IActionResult GetAllTransactions()
         {
             var transactions = _transactionServices.GetAllTransactions();

@@ -30,8 +30,7 @@ namespace OAS_WebAPI.Controllers
             var auction = _AuctionServices.GetAllAuctions();
             return Ok(auction);
         }
-        [HttpPost]
-        [Authorize(Roles = "User")]    
+        [HttpPost]   
         public IActionResult AddNewAuction([FromBody] Auction auction)
         {
             if (auction == null)
@@ -42,8 +41,6 @@ namespace OAS_WebAPI.Controllers
             return Ok(obj);
         }
         [HttpPatch]
-        [Authorize(Roles = "User")]
-        
         public IActionResult UpdateNewAuction([FromBody] Auction auction)
         {
             if (auction == null)
@@ -55,7 +52,6 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpDelete("{auctionId}")]
-        
         public IActionResult DeleteNewAuction(int auctionId)
         {
             if (auctionId <= 0)
