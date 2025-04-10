@@ -34,7 +34,7 @@ namespace OAS_WebAPI.Controllers
             return Ok(obj);
         }
         [HttpPatch]
-        [Authorize(Roles = "User")]
+        
         
         public IActionResult UpdateNewAuction([FromBody] Auction auction)
         {
