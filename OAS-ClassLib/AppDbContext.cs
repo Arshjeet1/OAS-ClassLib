@@ -15,7 +15,6 @@ namespace OAS_ClassLib
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<ProductImage> ProductImage { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Auction> Auctions { get; set; }
+       
     }
 }
