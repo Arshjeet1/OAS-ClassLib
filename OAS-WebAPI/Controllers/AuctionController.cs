@@ -30,7 +30,8 @@ namespace OAS_WebAPI.Controllers
             var auction = _AuctionServices.GetAllAuctions();
             return Ok(auction);
         }
-        [HttpPost]   
+
+        [HttpPost]  
         public IActionResult AddNewAuction([FromBody] Auction auction)
         {
             if (auction == null)
