@@ -41,6 +41,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("total/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<decimal> GetTotalBidsAmount(int auctionId)
         {
             var totalAmount = _bidStatisticsService.GetTotalBidsAmount(auctionId);
@@ -48,6 +49,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("count/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<int> GetBidCount(int auctionId)
         {
             var count = _bidStatisticsService.GetBidCount(auctionId);
@@ -55,6 +57,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("average/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<decimal> GetAverageBidAmount(int auctionId)
         {
             var averageAmount = _bidStatisticsService.GetAverageBidAmount(auctionId);
@@ -62,6 +65,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("min/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<decimal> GetMinBidAmount(int auctionId)
         {
             var minAmount = _bidStatisticsService.GetMinBidAmount(auctionId);
@@ -69,6 +73,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("max/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<decimal> GetMaxBidAmount(int auctionId)
         {
             var maxAmount = _bidStatisticsService.GetMaxBidAmount(auctionId);
@@ -76,6 +81,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("buyers/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<object>> GetBidsByBuyer(int auctionId)
         {
             var bidsByBuyer = _bidGroupingService.GetBidsByBuyer(auctionId);
@@ -83,6 +89,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("distinct-buyers/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<int>> GetDistinctBuyers(int auctionId)
         {
             var distinctBuyers = _bidGroupingService.GetDistinctBuyers(auctionId);
@@ -90,6 +97,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("ordered/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<Bid>> GetBidsOrderedByAmount(int auctionId)
         {
             var orderedBids = _bidQueryService.GetBidsOrderedByAmount(auctionId);
@@ -97,12 +105,14 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet("ordered-desc/{auctionId}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<Bid>> GetBidsOrderedByAmountDesc(int auctionId)
         {
             var orderedBidsDesc = _bidQueryService.GetBidsOrderedByAmountDesc(auctionId);
             return Ok(orderedBidsDesc);
         }
         [HttpGet("users-by-date")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<int>> GetUsersByBidDate([FromQuery] DateTime date)
         {
             var users = _bidQueryService.GetUsersByBidDate(date);
