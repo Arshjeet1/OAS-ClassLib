@@ -12,7 +12,7 @@ using OAS_ClassLib;
 namespace OAS_ClassLib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250409062807_InitialCreate")]
+    [Migration("20250409111214_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -106,8 +106,6 @@ namespace OAS_ClassLib.Migrations
 
                     b.HasKey("ImageId");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("ProductImage");
                 });
 
@@ -167,17 +165,6 @@ namespace OAS_ClassLib.Migrations
                     b.HasKey("TransactionID");
 
                     b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("OAS_ClassLib.Models.ProductImage", b =>
-                {
-                    b.HasOne("OAS_ClassLib.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }
