@@ -34,10 +34,6 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpPost]
-<<<<<<< HEAD
-       
-=======
->>>>>>> 9edf55693ce0c60249b64ce58d0694cd39433e7c
         public ActionResult AddBid([FromBody] Bid newBid)
         {
             _bidServices.AddBid(newBid);
