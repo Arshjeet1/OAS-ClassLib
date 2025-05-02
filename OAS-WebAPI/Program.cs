@@ -131,9 +131,7 @@ namespace OAS_WebAPI
             app.UseCors("AllowLocalhost");
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.MapControllers();
-
             app.Run();
         }
     }
