@@ -51,12 +51,18 @@ namespace OAS_WebAPI
             builder.Services.AddScoped<IProductQueryService, ProductServices>();
             builder.Services.AddDbContext<AppDbContext>();
 
+            //Retriving the secret key from the configuration
             var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
+
+            //SETIING UP THE AUTHENTICATION 
+
             builder.Services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
+
+                //CONIFIGURING JWT HANDLING 
                 .AddJwtBearer(x =>
                 {
                     x.RequireHttpsMetadata = false;
@@ -68,6 +74,10 @@ namespace OAS_WebAPI
                         ValidateAudience = false
                     };
                 });
+
+
+            //Integrates JWT authentication into Swagger documentation.
+
             builder.Services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -101,6 +111,7 @@ namespace OAS_WebAPI
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
+            
 
 
 

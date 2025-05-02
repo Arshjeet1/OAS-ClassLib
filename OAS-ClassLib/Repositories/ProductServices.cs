@@ -51,43 +51,74 @@ namespace OAS_ClassLib.Repositories
         {
             return _context.Products.ToList();
         }
-        public async Task<string> UploadImageAsync(IFormFile image, int productId)
+
+        public Product GetProductById(int productId)
         {
-            if (image == null || image.Length == 0)
-            {
-                return null;
-            }
-
-            var filePath = Path.Combine(_imageFolderPath, image.FileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await image.CopyToAsync(stream);
-            }
-
-            var productImage = new ProductImage
-            {
-                ProductId = productId,
-                ImageFileName = image.FileName,
-                ImageData = await File.ReadAllBytesAsync(filePath)
-            };
-
-            _context.ProductImage.Add(productImage);
-            _context.SaveChanges();
-
-            return filePath;
+            return _context.Products.Find(productId);
         }
 
-        public FileStream DownloadImage(string fileName)
+        public async Task<List<string>> UploadImagesAsync(List<IFormFile> images, int productId)
         {
-            var filePath = Path.Combine(_imageFolderPath, fileName);
-
-            if (!File.Exists(filePath))
+            if (images == null || images.Count == 0)
             {
                 return null;
             }
 
-            return File.OpenRead(filePath);
+            var existingImages = _context.ProductImage.Where(pi => pi.ProductId == productId).ToList();
+            if (existingImages.Count + images.Count > 5)
+            {
+                throw new InvalidOperationException("A product can have a maximum of 5 images.");
+            }
+
+            var filePaths = new List<string>();
+
+            foreach (var image in images)
+            {
+                var filePath = Path.Combine(_imageFolderPath, image.FileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                var productImage = new ProductImage
+                {
+                    ProductId = productId,
+                    ImageFileName = image.FileName,
+                    ImageData = await File.ReadAllBytesAsync(filePath)
+                };
+
+                _context.ProductImage.Add(productImage);
+                filePaths.Add(filePath);
+            }
+
+            _context.SaveChanges();
+
+            return filePaths;
+        }
+
+        public List<FileStream> DownloadImagesByProductId(int productId)
+        {
+            var images = _context.ProductImage.Where(pi => pi.ProductId == productId).ToList();
+
+            if (images == null || images.Count == 0)
+            {
+                return null;
+            }
+
+            var fileStreams = new List<FileStream>();
+
+            foreach (var image in images)
+            {
+                var filePath = Path.Combine(_imageFolderPath, image.ImageFileName);
+
+                if (File.Exists(filePath))
+                {
+                    fileStreams.Add(File.OpenRead(filePath));
+                }
+            }
+
+            return fileStreams;
         }
 
         public IEnumerable<ProductImage> GetImagesByProductId(int productId)
@@ -146,6 +177,5 @@ namespace OAS_ClassLib.Repositories
             return _context.Products.OrderByDescending(p => p.StartPrice).ToList();
         }
     }
-
 
 }

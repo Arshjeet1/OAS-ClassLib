@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Models;
 using OAS_ClassLib.Repositories;
@@ -53,7 +54,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpPatch("{productId}")]
-        [Authorize(Roles = "User")]
+        
         public IActionResult UpdateExisting(int productId, [FromBody] Product product)
         {
             _crudService.UpdateProduct(product);
@@ -62,7 +63,6 @@ namespace OAS_WebAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "User")]
         public IActionResult AddNewProduct([FromBody] Product product)
         {
             if (product == null)
@@ -73,36 +73,53 @@ namespace OAS_WebAPI.Controllers
             return Ok();
         }
         // Image Handling Endpoints
-        [HttpPost("{productId}/uploadImage")]
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> UploadImage(int productId, IFormFile image)
+        [HttpPost("{productId}/uploadImages")]
+        public async Task<IActionResult> UploadImages(int productId, [FromForm] List<IFormFile> images)
         {
-            var filePath = await _imageService.UploadImageAsync(image, productId);
-
-            if (filePath == null)
+            var product = _crudService.GetProductById(productId);
+            if (product == null)
             {
-                return BadRequest("No image file provided.");
+                return NotFound("Product not found.");
             }
 
-            return Ok(new { FilePath = filePath });
+            if (images == null || images.Count == 0)
+            {
+                return BadRequest("No images provided.");
+            }
+
+            var filePaths = await _imageService.UploadImagesAsync(images, productId);
+
+            return Ok(new { product, filePaths });
         }
 
-        [HttpGet("downloadImage/{fileName}")]
-
-        public IActionResult DownloadImage(string fileName)
+        [HttpGet("{productId}/downloadImages")]
+        public IActionResult DownloadImagesByProductId(int productId)
         {
-            var image = _imageService.DownloadImage(fileName);
+            var images = _imageService.DownloadImagesByProductId(productId);
 
-            if (image == null)
+            if (images == null || images.Count == 0)
             {
-                return NotFound("Image not found.");
+                return NotFound("No images found for this product.");
             }
 
-            return File(image, "image/jpeg");
+            var zipStream = new MemoryStream();
+            using (var archive = new System.IO.Compression.ZipArchive(zipStream, System.IO.Compression.ZipArchiveMode.Create, true))
+            {
+                foreach (var image in images)
+                {
+                    var entry = archive.CreateEntry(Path.GetFileName(image.Name));
+                    using (var entryStream = entry.Open())
+                    {
+                        image.CopyTo(entryStream);
+                    }
+                }
+            }
+            zipStream.Position = 0;
+
+            return File(zipStream, "application/zip", $"Product_{productId}_Images.zip");
         }
 
         [HttpGet("{productId}/images")]
-        [Authorize(Roles = "User")] 
         public IActionResult GetImagesByProductId(int productId)
         {
             var images = _imageService.GetImagesByProductId(productId);

@@ -43,6 +43,8 @@ namespace JWT.Logic
             );
 
             var tokenS = new JwtSecurityTokenHandler();
+
+            //Writetoken is serialization of token
             return tokenS.WriteToken(token);
         }
     }

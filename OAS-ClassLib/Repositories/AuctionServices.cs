@@ -27,7 +27,7 @@ namespace OAS_ClassLib.Repositories
         {
             DB1.nameValuePairList nvpList = new DB1.nameValuePairList
             {
-              
+                new DB1.nameValuePair("@AuctionId", auction.AuctionId),
                 new DB1.nameValuePair("@ProductId", auction.ProductId),
                 new DB1.nameValuePair("@StartDate", auction.StartDate),
                 new DB1.nameValuePair("@EndDate", auction.EndDate),

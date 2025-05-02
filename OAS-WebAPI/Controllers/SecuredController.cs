@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OAS_ClassLib.Interfaces;
 using OAS_ClassLib.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,9 +12,9 @@ namespace JWT.Controllers
     [Authorize]
     public class SecuredController : ControllerBase
     {
-        private readonly UserServices _userService;
+        private readonly IUserServices _userService;
 
-        public SecuredController(UserServices userService)
+        public SecuredController(IUserServices userService)
         {
             _userService = userService;
         }

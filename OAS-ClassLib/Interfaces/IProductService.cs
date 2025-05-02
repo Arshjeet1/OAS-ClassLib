@@ -14,13 +14,18 @@ namespace OAS_ClassLib.Interfaces
         void UpdateProduct(Product product);
         void RemoveProduct(int productID);
         List<Product> GetAllProducts();
+        Product GetProductById(int productId); // Add this method here
     }
+
+
     public interface IProductImageService
     {
-        Task<string> UploadImageAsync(IFormFile image, int productId);
-        FileStream DownloadImage(string fileName);
+        Task<List<string>> UploadImagesAsync(List<IFormFile> images, int productId);
+        List<FileStream> DownloadImagesByProductId(int productId);
         IEnumerable<ProductImage> GetImagesByProductId(int productId);
     }
+
+
     public interface IProductStatisticsService
     {
         int GetProductCount();

@@ -36,7 +36,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllUsers()
         {
             var users = _userServices.GetUsers();
@@ -44,7 +44,7 @@ namespace OAS_WebAPI.Controllers
         }
         [HttpPatch]
         [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]
+        
         public IActionResult UpdateNewUser([FromBody] User user)
         {
             if (user == null)
@@ -57,7 +57,6 @@ namespace OAS_WebAPI.Controllers
 
         [HttpDelete("{UserId}")]
         [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]
         public IActionResult DeleteNewUser(int UserId)
         {
             if (UserId <= 0)

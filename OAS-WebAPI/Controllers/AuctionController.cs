@@ -31,7 +31,7 @@ namespace OAS_WebAPI.Controllers
             return Ok(auction);
         }
         [HttpPost]
-        [Authorize(Roles = "User")]    
+        
         public IActionResult AddNewAuction([FromBody] Auction auction)
         {
             if (auction == null)
@@ -42,7 +42,7 @@ namespace OAS_WebAPI.Controllers
             return Ok(obj);
         }
         [HttpPatch]
-        [Authorize(Roles = "User")]
+        
         
         public IActionResult UpdateNewAuction([FromBody] Auction auction)
         {

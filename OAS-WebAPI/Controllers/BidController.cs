@@ -34,7 +34,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User")]
+       
         public ActionResult AddBid([FromBody] Bid newBid)
         {
             _bidServices.AddBid(newBid);
