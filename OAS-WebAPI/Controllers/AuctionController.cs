@@ -30,13 +30,7 @@ namespace OAS_WebAPI.Controllers
             var auction = _AuctionServices.GetAllAuctions();
             return Ok(auction);
         }
-<<<<<<< HEAD
-        [HttpPost]
-        
-=======
-
         [HttpPost]  
->>>>>>> 9edf55693ce0c60249b64ce58d0694cd39433e7c
         public IActionResult AddNewAuction([FromBody] Auction auction)
         {
             if (auction == null)
@@ -47,11 +41,6 @@ namespace OAS_WebAPI.Controllers
             return Ok(obj);
         }
         [HttpPatch]
-<<<<<<< HEAD
-        
-        
-=======
->>>>>>> 9edf55693ce0c60249b64ce58d0694cd39433e7c
         public IActionResult UpdateNewAuction([FromBody] Auction auction)
         {
             if (auction == null)

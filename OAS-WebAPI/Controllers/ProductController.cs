@@ -54,10 +54,6 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpPatch("{productId}")]
-<<<<<<< HEAD
-        
-=======
->>>>>>> 9edf55693ce0c60249b64ce58d0694cd39433e7c
         public IActionResult UpdateExisting(int productId, [FromBody] Product product)
         {
             _crudService.UpdateProduct(product);
@@ -76,13 +72,8 @@ namespace OAS_WebAPI.Controllers
             return Ok();
         }
         // Image Handling Endpoints
-<<<<<<< HEAD
         [HttpPost("{productId}/uploadImages")]
         public async Task<IActionResult> UploadImages(int productId, [FromForm] List<IFormFile> images)
-=======
-        [HttpPost("{productId}/uploadImage")]
-        public async Task<IActionResult> UploadImage(int productId, IFormFile image)
->>>>>>> 9edf55693ce0c60249b64ce58d0694cd39433e7c
         {
             var product = _crudService.GetProductById(productId);
             if (product == null)
@@ -99,14 +90,9 @@ namespace OAS_WebAPI.Controllers
 
             return Ok(new { product, filePaths });
         }
-
-<<<<<<< HEAD
+ 
         [HttpGet("{productId}/downloadImages")]
         public IActionResult DownloadImagesByProductId(int productId)
-=======
-        [HttpGet("downloadImage/{fileName}")]
-        public IActionResult DownloadImage(string fileName)
->>>>>>> 9edf55693ce0c60249b64ce58d0694cd39433e7c
         {
             var images = _imageService.DownloadImagesByProductId(productId);
 
