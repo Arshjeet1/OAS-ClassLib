@@ -9,7 +9,7 @@ using OAS_ClassLib.Repositories;
 namespace OAS_WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController] 
+    [ApiController]
     public class ProductController : ControllerBase
     {
 
@@ -38,7 +38,7 @@ namespace OAS_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult GetAllProduct()
         {
             var obj = _crudService.GetAllProducts();
@@ -90,7 +90,7 @@ namespace OAS_WebAPI.Controllers
 
             return Ok(new { product, filePaths });
         }
- 
+
         [HttpGet("{productId}/downloadImages")]
         public IActionResult DownloadImagesByProductId(int productId)
         {

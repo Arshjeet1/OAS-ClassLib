@@ -16,11 +16,13 @@ namespace OAS_WebAPI
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowLocalhost",
-                    builder => builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader());
+                options.AddPolicy("AllowAngularApp",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:4200")  // Your Angular app URL
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                    });
             });
 
             // Add services to the container.
@@ -128,7 +130,7 @@ namespace OAS_WebAPI
             }
 
             app.UseHttpsRedirection();
-            app.UseCors("AllowLocalhost");
+            app.UseCors("AllowAngularApp");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();

@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OAS_ClassLib.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace OAS_ClassLib.Interfaces
@@ -14,9 +12,8 @@ namespace OAS_ClassLib.Interfaces
         void UpdateProduct(Product product);
         void RemoveProduct(int productID);
         List<Product> GetAllProducts();
-        Product GetProductById(int productId); // Add this method here
+        Product GetProductById(int productId);
     }
-
 
     public interface IProductImageService
     {
@@ -24,7 +21,6 @@ namespace OAS_ClassLib.Interfaces
         List<FileStream> DownloadImagesByProductId(int productId);
         IEnumerable<ProductImage> GetImagesByProductId(int productId);
     }
-
 
     public interface IProductStatisticsService
     {
@@ -34,6 +30,7 @@ namespace OAS_ClassLib.Interfaces
         decimal GetMinStartPrice();
         decimal GetMaxStartPrice();
     }
+
     public interface IProductQueryService
     {
         List<object> GetProductsByCategory();
@@ -42,4 +39,3 @@ namespace OAS_ClassLib.Interfaces
         List<Product> GetProductsOrderedByStartPriceDesc();
     }
 }
-

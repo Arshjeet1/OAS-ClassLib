@@ -12,12 +12,8 @@ using OAS_ClassLib;
 namespace OAS_ClassLib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<<< HEAD:OAS-ClassLib/Migrations/20250410040521_InitialCreate.Designer.cs
-    [Migration("20250410040521_InitialCreate")]
-========
-    [Migration("20250409111214_InitialCreate")]
->>>>>>>> 9edf55693ce0c60249b64ce58d0694cd39433e7c:OAS-ClassLib/Migrations/20250409111214_InitialCreate.Designer.cs
-    partial class InitialCreate
+    [Migration("20250505083647_initial-create")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,6 +123,9 @@ namespace OAS_ClassLib.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");

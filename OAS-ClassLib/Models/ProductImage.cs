@@ -16,5 +16,7 @@ namespace OAS_ClassLib.Models
 
         public byte[] ImageData { get; set; }
 
-    }
+        public Product Product { get; set; }
+    
+}
 }
